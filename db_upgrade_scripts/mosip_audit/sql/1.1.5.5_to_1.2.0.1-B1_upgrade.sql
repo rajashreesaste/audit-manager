@@ -1,12 +1,9 @@
--- -------------------------------------------------------------------------------------------------
--- Database Name: mosip_audit
--- Release Version 	: 1.2.0-SNAPSHOT
--- Purpose    		: Database Alter scripts for the release for Audit DB.       
--- Create By   		: Sadanandegowda DM
--- Created Date		: Sep-2020
--- 
--- Modified Date        Modified By         Comments / Remarks
--- -------------------------------------------------------------------------------------------------
+ALTER DATABASE mosip_audit OWNER TO postgres;
 
-\c mosip_audit sysadmin
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA audit TO postgres;
+
+REVOKE ALL PRIVILEGES ON DATABASE mosip_audit FROM audituser, sysadmin;
+
+GRANT SELECT, INSERT, TRUNCATE, REFERENCES, UPDATE, DELETE ON ALL TABLES IN SCHEMA audit TO audituser;
+
 ALTER TABLE audit.app_audit_log ALTER COLUMN host_ip TYPE varchar(256) USING host_ip::varchar;
